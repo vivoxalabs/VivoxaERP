@@ -72,7 +72,8 @@ class SideBar extends Component {
           </div>
         </div>
       </div>
-    );
+   
+   );
   }
 }
 
