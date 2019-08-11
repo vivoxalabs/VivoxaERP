@@ -1,16 +1,19 @@
-import React from 'react';
+
+import React, { Component } from 'react';
 //import logo from './logo.svg';
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/SideBar";
 import './App.css';
 
-function App() {
-  return (
-    <React.Fragment>
+class App extends Component {
+  state = {  }
+  render() { 
+    return (<React.Fragment>
       <NavBar/>
       <Sidebar/>
-    </React.Fragment>
-  );
+    </React.Fragment>  );
+  }
 }
-
+ 
 export default App;
+

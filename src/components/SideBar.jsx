@@ -2,6 +2,11 @@ import React, { Component } from "react";
 
 class SideBar extends Component {
   state = {};
+  handleChange = id => {
+    console.log(id);
+    return (<h1>new</h1>);
+  };
+
   render() {
     return (
       <div className="row">
@@ -15,65 +20,17 @@ class SideBar extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Orders <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Products <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Customers <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Products <span class="sr-only" />
-                </a>
-              </li>
-              <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                <span>Saved reports</span>
-                <a class="d-flex align-items-center text-muted" href="#">
-                  <span data-feather="plus-circle" />
-                </a>
-              </h6>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Settings <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Orders <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Settings <span class="sr-only" />
-                </a>
-              </li>
-              <li className="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home" />
-                  Orders <span class="sr-only" />
-                </a>
+                <span data-feather="home" />
+                <button type="button" class="btn btn-secondary" onClick={()=>this.handleChange({id:1})}>
+                  Orders
+                </button>
+                <span class="sr-only" />
               </li>
             </ul>
           </div>
         </div>
       </div>
-   
-   );
+    );
   }
 }
 
