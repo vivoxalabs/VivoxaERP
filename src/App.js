@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/SideBar";
 import Card from "./components/Card";
+import Login from "./components/Login";
 import "./App.css";
 
 class App extends Component {
@@ -10,9 +11,10 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBar />
+        {/* <NavBar />
         <Sidebar />
-        <Card/>
+        <Card/> */}
+        <Login />
       </React.Fragment>
     );
   }
