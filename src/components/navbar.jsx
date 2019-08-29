@@ -42,9 +42,11 @@ const useStyles = makeStyles(theme => ({
 function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [NotifiAnchorEl, setNotifiAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
+  const isNotifiMenuOpen = Boolean(NotifiAnchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   function handleProfileMenuOpen(event) {
@@ -55,9 +57,18 @@ function NavBar() {
     setMobileMoreAnchorEl(null);
   }
 
+  function handleNotifiMenuClose() {
+    setNotifiAnchorEl(null);
+    handleMobileMenuClose();
+  }
+
   function handleMenuClose() {
     setAnchorEl(null);
     handleMobileMenuClose();
+  }
+
+  function handleNofitiMenuOpen(event) {
+    setNotifiAnchorEl(event.currentTarget);
   }
 
   function handleMobileMenuOpen(event) {
@@ -65,6 +76,7 @@ function NavBar() {
   }
 
   const menuId = "primary-search-account-menu";
+  const notifiMenuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -78,6 +90,21 @@ function NavBar() {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+    </Menu>
+  );
+  const renderNotifiMenu = (
+    <Menu
+      anchorEl={NotifiAnchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={notifiMenuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isNotifiMenuOpen}
+      onClose={handleNotifiMenuClose}
+    >
+      <MenuItem onClick={handleNotifiMenuClose}>Notification 1</MenuItem>
+      <MenuItem onClick={handleNotifiMenuClose}>Notification 1</MenuItem>
+      <MenuItem onClick={handleNotifiMenuClose}>Notification 1</MenuItem>
     </Menu>
   );
 
@@ -100,7 +127,7 @@ function NavBar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={handleNofitiMenuOpen}>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
@@ -143,7 +170,13 @@ function NavBar() {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={handleNofitiMenuOpen}
+              aria-controls={notifiMenuId}
+              aria-haspopup="true"
+            >
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -173,8 +206,8 @@ function NavBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
+      {renderNotifiMenu}
       {renderMenu}
-      
     </div>
   );
 }
