@@ -4,17 +4,17 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 import List from "@material-ui/core/List";
-import StarBorder from "@material-ui/icons/StarBorder";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import PaymentIcon from '@material-ui/icons/Payment';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -39,22 +39,22 @@ export default function ListItems() {
       </ListItem>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <AddCircleIcon />
         </ListItemIcon>
-        <ListItemText primary="Orders" />
+        <ListItemText primary="Add New" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <StarBorder />
+              <AssignmentIcon />
             </ListItemIcon>
             <ListItemText secondary="Pre-Enter" />
           </ListItem>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <StarBorder />
+              <AssignmentIndIcon />
             </ListItemIcon>
             <ListItemText secondary="Final Entry" />
           </ListItem>
@@ -71,6 +71,12 @@ export default function ListItems() {
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Reports" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <PaymentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Payments" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

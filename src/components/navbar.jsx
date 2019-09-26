@@ -19,12 +19,17 @@ import Drawer from "@material-ui/core/Drawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import List from "@material-ui/core/List";
 import ListItems from "./ListItms";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import CustTable from "./CustTable";
+import Chart from "./Chart";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    display:'flex'
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -106,7 +111,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     display: "flex",
-    overflow: "auto",
+    overflowX: "auto",
     flexDirection: "column"
   },
   fixedHeight: {
@@ -295,9 +300,6 @@ function NavBar() {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderNotifiMenu}
-      {renderMenu}
       <Drawer
         variant="permanent"
         classes={{
@@ -311,8 +313,33 @@ function NavBar() {
           </IconButton>
         </div>
         <Divider />
-        <List><ListItems/></List>
+        <List>
+          <ListItems />
+        </List>
       </Drawer>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>{<Chart/>}</Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>{/* <Deposits /> */}</Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <CustTable />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </main>
+      {renderMobileMenu}
+      {renderNotifiMenu}
+      {renderMenu}
     </div>
   );
 }
