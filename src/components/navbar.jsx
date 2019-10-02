@@ -1,35 +1,55 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import {
+  Grid,
+  Paper,
+  Container,
+  List,
+  Drawer,
+  MenuItem,
+  Badge,
+  Menu,
+  IconButton,
+  Divider,
+  Typography,
+  Toolbar,
+  AppBar
+} from "@material-ui/core";
 //import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
 import clsx from "clsx";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import Badge from "@material-ui/core/Badge";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import Drawer from "@material-ui/core/Drawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import List from "@material-ui/core/List";
-import ListItems from "./ListItms";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import CustTable from "./CustTable";
-import Chart from "./Chart";
+// import ListItems from "./ListItms";
+// import CustTable from "./CustTable";
+// import Chart from "./Chart";
+import DashboardContent from './sub-components/DashboardContent';
+import {
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Collapse
+} from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import LayersIcon from "@material-ui/icons/Layers";
+import PaymentIcon from "@material-ui/icons/Payment";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import PreEntry from "./PreEntry";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display:'flex'
+    display: "flex"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -116,6 +136,9 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 240
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
   }
 }));
 
@@ -128,6 +151,18 @@ function NavBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isNotifiMenuOpen = Boolean(NotifiAnchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const handleMenuClick = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   function handleProfileMenuOpen(event) {
     setAnchorEl(event.currentTarget);
@@ -228,13 +263,7 @@ function NavBar() {
       </MenuItem>
     </Menu>
   );
-  const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+ 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -300,6 +329,7 @@ function NavBar() {
           </div>
         </Toolbar>
       </AppBar>
+      <Router>
       <Drawer
         variant="permanent"
         classes={{
@@ -314,29 +344,70 @@ function NavBar() {
         </div>
         <Divider />
         <List>
-          <ListItems />
+          <ListItem button component={Link} to="/console">
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button onClick={handleMenuClick}>
+            <ListItemIcon>
+              <AddCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add New" />
+            {menuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={menuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button={true} className={classes.nested} component={Link} to="/pre-entry"> 
+                <ListItemIcon>
+                  <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText secondary="Pre-Entry" />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <AssignmentIndIcon />
+                </ListItemIcon>
+                <ListItemText secondary="Final Entry" />
+              </ListItem>
+            </List>
+          </Collapse>
+          <ListItem button>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Customers" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reports" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <PaymentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Payments" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="Integrations" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>{<Chart/>}</Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>{/* <Deposits /> */}</Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <CustTable />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
+        <Route path="/pre-entry" render={() => (
+          <PreEntry/>
+        )}/>
+        <Route path="/console" render={() => (
+          <DashboardContent/>
+        )}/>
       </main>
+      </Router>
       {renderMobileMenu}
       {renderNotifiMenu}
       {renderMenu}

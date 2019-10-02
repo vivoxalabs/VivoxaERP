@@ -18,9 +18,7 @@ class App extends Component {
         <Route path="/console" exact strict render={()=>{
           return (<NavBar/>)
         }} />
-        <Route path="/dash" exact strict render={()=>{
-          return (<Dashboard/>)
-        }} />
+        
       </Router>
     );
   }
