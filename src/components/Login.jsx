@@ -5,21 +5,23 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import Links from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Links color="inherit" href="https://material-ui.com/">
         Vivoxa Labs Inc.
-      </Link>{" "}
+      </Links>{" "}
       {new Date().getFullYear()}
     </Typography>
   );
@@ -49,6 +51,10 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }));
+
+const collisionLink = React.forwardRef((props, ref) => (
+  <Link innerRef={ref} to="/console" {...props} />
+));
 
 function Login() {
   const classes = useStyles();
@@ -88,7 +94,7 @@ function Login() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            lable="Remember Me"
+            label="Remember Me"
           />
           <Button
             type="submit"
@@ -96,25 +102,27 @@ function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            component={collisionLink}
           >
             Sign In
           </Button>
+
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Links href="#" variant="body2">
                 Forgot password?
-              </Link>
+              </Links>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Links href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </Links>
             </Grid>
           </Grid>
         </form>
       </div>
       <Box mt={8}>
-          <Copyright/>
+        <Copyright />
       </Box>
     </Container>
   );
