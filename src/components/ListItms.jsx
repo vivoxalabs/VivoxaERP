@@ -1,7 +1,6 @@
 import React from "react";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import {ListItemIcon,ListItemText} from "@material-ui/core";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
@@ -14,21 +13,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import PaymentIcon from '@material-ui/icons/Payment';
+import PaymentIcon from "@material-ui/icons/Payment";
+import PreEntry from "./PreEntry";
 
 const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4)
   }
 }));
-
-export default function ListItems() {
+export default function ListItems(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
+  
   return (
     <div>
       <ListItem button>
@@ -46,11 +46,11 @@ export default function ListItems() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button={true} className={classes.nested}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText secondary="Pre-Enter" />
+            <ListItemText secondary="Pre-Entry" />
           </ListItem>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
