@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 function createTableData(id, custName, enterDate, type, payment) {
   return { id, custName, enterDate, type, payment };
 }
+
 const rows = [
   createTableData(0, "Hirantha Peiris", "19-05-2019", "AAB", 5000),
   createTableData(0, "Hirantha Peiris", "19-05-2019", "AAB", 5000),
