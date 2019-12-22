@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
   layout: {
     width: "auto",
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    marginTop : theme.spacing(10)
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -43,11 +44,9 @@ export default function PreEntry() {
       <CssBaseline />
       <main className={classes.layout}>
         <Typography variant="h6" gutterBottom>
-          Pre-Enter Customer details
+          Pre-Enter Customer Details
         </Typography>
         <Paper className={classes.paper}>
-
-        </Paper>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={6}>
             <TextField
@@ -114,6 +113,8 @@ export default function PreEntry() {
             </Select>
           </Grid>
         </Grid>
+        </Paper>
+        
       </main>
     </React.Fragment>
   );
