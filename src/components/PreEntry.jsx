@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import PersonalS1 from "./sub-components/pre-entry/PersonalS1";
 import TypeS2 from "./sub-components/pre-entry/TypeS2";
+import PaymentS3 from "./sub-components/pre-entry/PaymentS3";
 
 //import { Button } from "react-bootstrap/lib/InputGroup";
 
@@ -35,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     display: "flex",
     justifyContent: "flex-end"
+  },
+  button: {
+    margin: 5
   }
 }));
 const steps = ["Personal Details", "Lisence Details", "Payment Details"];
@@ -44,7 +48,9 @@ function getStepContent(step) {
     case 0:
       return <PersonalS1 />;
     case 1:
-      return <TypeS2/>;
+      return <TypeS2 />;
+    case 2:
+      return <PaymentS3 />;
     default:
       throw new Error("Unknown Step");
   }
@@ -93,6 +99,7 @@ export default function PreEntry() {
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button
+                      className={classes.button}
                       variant="contained"
                       color="primary"
                       onClick={handleBack}
@@ -101,6 +108,7 @@ export default function PreEntry() {
                     </Button>
                   )}
                   <Button
+                    className={classes.button}
                     varient="contained"
                     color="primary"
                     onClick={handleNext}

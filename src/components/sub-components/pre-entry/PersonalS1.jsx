@@ -1,13 +1,12 @@
 import React from "react";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import { makeStyles, Grid, TextField } from "@material-ui/core";
+
 import {
-  makeStyles,
-  Grid,
-  TextField,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControl
-} from "@material-ui/core";
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -18,17 +17,14 @@ const useStyles = makeStyles(theme => ({
 export default function PersonalS1() {
   const classes = useStyles();
 
-  const [values, setValues] = React.useState({
-    type: ""
-  });
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date()
+  );
 
-  const handleChange = event => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value
-    }));
-    
+  const handleDateChange = date => {
+    setSelectedDate(date);
   };
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6} lg={6}>
@@ -82,22 +78,39 @@ export default function PersonalS1() {
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
-        <FormControl className={classes.form}>
-          <InputLabel id="demo-simple-select-label">Vehicle Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={values.type}
-            inputProps={{
-              name: "type",
-              id: "type-simple"
+        <TextField
+          required
+          id="zip"
+          name="zip"
+          label="Zip"
+          fullWidth
+          autoComplete="city"
+        />
+      </Grid>
+      <Grid item xs={12} md={6} lg={6}>
+        <TextField
+          required
+          id="contactNum"
+          name="contactNum"
+          label="Contact Number"
+        />
+      </Grid>
+      <Grid item xs={12} md={6} lg={6}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="dob"
+            label="Date of Birth"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              "aria-label": "change date"
             }}
-            onChange={handleChange}
-          >
-            <MenuItem value={"Auto"}>Auto</MenuItem>
-            <MenuItem value={"Manual"}>Manual</MenuItem>
-          </Select>
-        </FormControl>
+          />
+        </MuiPickersUtilsProvider>
       </Grid>
     </Grid>
   );

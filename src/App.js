@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import PreEntry from "./components/PreEntry";
 
 //import Dashboard from "./components/dashboard";
+
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route from "react-router-dom/Route";
@@ -32,11 +33,12 @@ class App extends Component {
         />
         <Route
           path="/pre-entry"
+          exact
+          strict
           render={() => {
             return (
               <React.Fragment>
                 <NavBar />
-                <PreEntry />
               </React.Fragment>
             );
           }}
