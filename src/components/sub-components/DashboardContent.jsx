@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles, Grid, Container,Paper } from '@material-ui/core';
-import CustTable from '../CustTable';
+import CustTable from './CustTable';
 import clsx from 'clsx';
-import Chart from '../Chart';
+import Chart from './Chart';
 
 const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
