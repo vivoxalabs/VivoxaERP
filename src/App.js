@@ -2,8 +2,8 @@ import React, { Component } from "react";
 //import logo from './logo.svg';
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
-import PreEntry from "./components/PreEntry";
-
+//import PreEntry from "./components/PreEntry";
+//import FinalEntry from "./components/FinalEntry";
 //import Dashboard from "./components/dashboard";
 
 import "./App.css";
@@ -35,6 +35,16 @@ class App extends Component {
           path="/pre-entry"
           exact
           strict
+          render={() => {
+            return (
+              <React.Fragment>
+                <NavBar />
+              </React.Fragment>
+            );
+          }}
+        />
+        <Route
+          path="/final-entry"
           render={() => {
             return (
               <React.Fragment>
