@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustTable() {
-  const classes = makeStyles();
+  const classes = useStyles();
   return (
     <React.Fragment>
       <Typography variant="h4" gutterBottom>
@@ -81,7 +81,7 @@ export default function CustTable() {
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
+        <Link color="primary" href="">
           See more orders
         </Link>
       </div>

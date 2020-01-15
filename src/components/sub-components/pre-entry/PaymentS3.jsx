@@ -4,7 +4,6 @@ import {
   Grid,
   TextField,
   Checkbox,
-  InputLabel,
   FormControlLabel
 } from "@material-ui/core";
 
@@ -16,11 +15,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function PaymentS3() {
   const classes = useStyles();
-  const [payVal, setPayVal] = React.useState(0);
+  const [isaAdvPay, setIsaAdvPay] = React.useState(0);
 
   const handlePaySelect = event => {
-    setPayVal(event.target.checked);
+    setIsaAdvPay(event.target.checked);
   };
+  
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6} lg={6}>
