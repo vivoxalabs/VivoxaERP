@@ -2,15 +2,18 @@ import React from "react";
 import {
   makeStyles,
   Typography,
-  Grid,
-  TextField,
-  InputLabel,
-  Select,
-  MenuItem,
   CssBaseline,
   Paper,
-  FormControl
+  Stepper,
+  Step,
+  StepLabel,
+  Button
 } from "@material-ui/core";
+import PersonalS1 from "./sub-components/pre-entry/PersonalS1";
+import TypeS2 from "./sub-components/pre-entry/TypeS2";
+import PaymentS3 from "./sub-components/pre-entry/PaymentS3";
+
+//import { Button } from "react-bootstrap/lib/InputGroup";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -24,21 +27,43 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3),
     padding: theme.spacing(3)
   },
-  form:{
-      minWidth:50
+  form: {
+    minWidth: 50
+  },
+  stepper: {
+    padding: theme.spacing(3, 0, 5)
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    margin: 5
   }
 }));
+const steps = ["Personal Details", "Lisence Details", "Payment Details"];
 
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <PersonalS1 />;
+    case 1:
+      return <TypeS2 />;
+    case 2:
+      return <PaymentS3 />;
+    default:
+      throw new Error("Unknown Step");
+  }
+}
 export default function PreEntry() {
-  const [values, setValues] = React.useState({
-    type: ""
-  });
+  const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleChange = event => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value
-    }));
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
   };
 
   const classes = useStyles();
@@ -51,78 +76,49 @@ export default function PreEntry() {
           Pre-Enter Customer Details
         </Typography>
         <Paper className={classes.paper}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
-              <TextField
-                required
-                id="firstName"
-                name="firstName"
-                label="First Name"
-                fullWidth
-                autoComplete="fname"
-              />
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              <TextField
-                required
-                id="lastName"
-                name="lastName"
-                label="Last Name"
-                fullWidth
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-              <TextField
-                required
-                id="address1"
-                name="address1"
-                label="Address Line 1"
-                fullWidth
-                autoComplete="address1"
-              />
-            </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-              <TextField
-                required
-                id="address2"
-                name="address2"
-                label="Address Line 2"
-                fullWidth
-                autoComplete="address2"
-              />
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              <TextField
-                required
-                id="city"
-                name="city"
-                label="City*"
-                fullWidth
-                autoComplete="city"
-              />
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              <FormControl className={classes.form}>
-                <InputLabel id="demo-simple-select-label">
-                  Vehicle Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={values.type}
-                  inputProps={{
-                    name: "type",
-                    id: "type-simple"
-                  }}
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"Auto"}>Auto</MenuItem>
-                  <MenuItem value={"Manual"}>Manual</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <Stepper activeStep={activeStep} ClassName={classes.stepper}>
+            {steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h4" gutterBottom>
+                  Success
+                </Typography>
+                <Typography variant="subtitle2">
+                  Customer's Details Saved as Pending Customer
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button
+                      className={classes.button}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleBack}
+                    >
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    className={classes.button}
+                    varient="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
         </Paper>
       </main>
     </React.Fragment>

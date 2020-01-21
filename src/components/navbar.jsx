@@ -2,9 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Grid,
-  Paper,
-  Container,
   List,
   Drawer,
   MenuItem,
@@ -44,6 +41,7 @@ import LayersIcon from "@material-ui/icons/Layers";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import PreEntry from "./PreEntry";
+import FinalEntry from "./FinalEntry";
 
 const drawerWidth = 240;
 
@@ -365,7 +363,7 @@ function NavBar() {
                 </ListItemIcon>
                 <ListItemText secondary="Pre-Entry" />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem button={true} className={classes.nested} component={Link} to="/final-entry">
                 <ListItemIcon>
                   <AssignmentIndIcon />
                 </ListItemIcon>
@@ -405,6 +403,9 @@ function NavBar() {
         )}/>
         <Route path="/console" render={() => (
           <DashboardContent/>
+        )}/>
+        <Route path="/final-entry" render={()=>(
+          <FinalEntry/>
         )}/>
       </main>
       </Router>
