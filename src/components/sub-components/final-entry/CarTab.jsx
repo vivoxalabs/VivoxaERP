@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 export default function CarTab() {
   const classes = useStyles();
 
-  const [isInclude, setIsInclude] = React.useState(0);
+  const [isInclude, setIsInclude] = React.useState(false);
   const [licenseType, setLicenseType] = React.useState("Manual");
   const [trainType, setTrainType] = React.useState("with");
 
@@ -38,9 +38,9 @@ export default function CarTab() {
     setIsInclude(event.target.checked);
   };
 
-  const handleLicenseTypeChange = event =>{
+  const handleLicenseTypeChange = event => {
     setLicenseType(event.target.value);
-  }
+  };
 
   return (
     <React.Fragment>
@@ -68,11 +68,13 @@ export default function CarTab() {
                 onChange={handleLicenseTypeChange}
               >
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="Manual"
                   control={<Radio />}
                   label="Manual Vehicle"
                 />
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="Auto"
                   control={<Radio />}
                   label="Auto Vehicle"
@@ -92,11 +94,13 @@ export default function CarTab() {
                 onChange={handleTrainTypeChange}
               >
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="with"
                   control={<Radio />}
                   label="With Training"
                 />
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="without"
                   control={<Radio />}
                   label="Without Training"

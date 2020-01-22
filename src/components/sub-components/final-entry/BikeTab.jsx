@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 export default function BikeTab() {
   const classes = useStyles();
 
-  const [isInclude, setIsInclude] = React.useState(0);
-  const [A1Only, setA1Only] = React.useState(0);
+  const [isInclude, setIsInclude] = React.useState(false);
+  const [A1Only, setA1Only] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
 
   const handleTrainTypeChange = event => {
@@ -58,7 +58,7 @@ export default function BikeTab() {
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
             <FormControlLabel
-              control={<Checkbox onChange={handleA1Only} value="A1Oonly" />}
+              control={<Checkbox disabled={!isInclude} onChange={handleA1Only} value="A1Oonly" />}
               label="A1 only - Scooter"
             />
           </Grid>
@@ -74,11 +74,13 @@ export default function BikeTab() {
                 onChange={handleTrainTypeChange}
               >
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="with"
                   control={<Radio />}
                   label="With Training"
                 />
                 <FormControlLabel
+                  disabled={!isInclude}
                   value="without"
                   control={<Radio />}
                   label="Without Training"
