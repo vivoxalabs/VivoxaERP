@@ -98,7 +98,7 @@ export default function FinalEntry() {
                   {activeStep !== 0 && (
                     <Button
                       className={classes.button}
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       onClick={handleBack}
                     >
@@ -107,11 +107,11 @@ export default function FinalEntry() {
                   )}
                   <Button
                     className={classes.button}
-                    varient="contained"
+                    variant="contained"
                     color="primary"
                     onClick={handleNext}
                   >
-                    Next
+                    {activeStep === steps.length - 1 ? "Save" : "Next"}
                   </Button>
                 </div>
               </React.Fragment>
