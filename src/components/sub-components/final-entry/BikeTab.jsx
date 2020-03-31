@@ -13,6 +13,7 @@ import {
   Button,
   FormLabel
 } from "@material-ui/core";
+import { useEffect } from "react";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -24,13 +25,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function BikeTab() {
+export default function BikeTab(props) {
   const classes = useStyles();
 
   const [isInclude, setIsInclude] = React.useState(false);
   const [A1Only, setA1Only] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
-
+  
   const handleTrainTypeChange = event => {
     setTrainType(event.target.value);
   };
@@ -58,7 +59,13 @@ export default function BikeTab() {
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
             <FormControlLabel
-              control={<Checkbox disabled={!isInclude} onChange={handleA1Only} value="A1Oonly" />}
+              control={
+                <Checkbox
+                  disabled={!isInclude}
+                  onChange={handleA1Only}
+                  value="A1Oonly"
+                />
+              }
               label="A1 only - Scooter"
             />
           </Grid>

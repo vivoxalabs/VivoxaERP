@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 export default function ConfirmSaveS3(){
     return(
         <React.Fragment>
-            <Typography variant='subtitle2' gutterBottom>
+            <Typography variant='subtitle1' gutterBottom>
                 Confirm and Save
             </Typography>
         </React.Fragment>

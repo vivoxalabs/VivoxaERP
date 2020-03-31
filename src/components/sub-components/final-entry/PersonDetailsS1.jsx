@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PersonDetailsS1() {
+export default function PersonDetailsS1(props) {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [genderValue, setGenderValue] = React.useState("null");
@@ -46,6 +46,10 @@ export default function PersonDetailsS1() {
   const handleDateChange = date => {
     setSelectedDate(date);
   };
+  const handleName = () =>{
+    
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />

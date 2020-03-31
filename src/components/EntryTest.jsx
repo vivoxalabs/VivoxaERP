@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   makeStyles,
   Typography,
@@ -12,41 +12,45 @@ import {
 import VehicleS2 from "./sub-components/final-entry/VehicleS2";
 import PersonDetailsS1 from "./sub-components/final-entry/PersonDetailsS1";
 import ConfirmSaveS3 from "./sub-components/final-entry/ConfirmSaveS3";
-
 const useStyles = makeStyles(theme => ({
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(10)
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(3)
-  },
-  formControl: {
-    margin: theme.spacing(3)
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  button: {
-    margin: 5
-  }
-}));
+    layout: {
+      width: "auto",
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+      marginTop: theme.spacing(10)
+    },
+    paper: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(3)
+    },
+    formControl: {
+      margin: theme.spacing(3)
+    },
+    stepper: {
+      padding: theme.spacing(3, 0, 5)
+    },
+    buttons: {
+      display: "flex",
+      justifyContent: "flex-end"
+    },
+    button: {
+      margin: 5
+    }
+  }));
 
-const steps = ["Personal Details", "Licence Details", "Confirm & Save"];
-
-
-export default function FinalEntry() {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+export default function EntryTest(props) {
   
+  const steps = ["Personal Details", "Licence Details", "Confirm & Save"];
+  const classes = useStyles();
+
+  const [formFields,setformFields]= React.useState({
+      field1:"",
+      field2:""
+  });
+
+  const [activeStep, setActiveStep] = React.useState(0);
+
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -54,10 +58,15 @@ export default function FinalEntry() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  
+//   const handlePersonal = name => {
+//     this.setState({ pName: name });
+//   };
+
   function getStep(step) {
     switch (step) {
       case 0:
-        return <PersonDetailsS1 />;
+        return <PersonDetailsS1 {...formFields} activeStep={activeStep} handleNext={handleNext} handleBack={handleBack} />;
       case 1:
         return <VehicleS2 />;
       case 2:
@@ -68,7 +77,7 @@ export default function FinalEntry() {
   }
 
   return (
-    <React.Fragment>
+    <React.Component>
       <CssBaseline />
       <main className={classes.layout}>
         <Typography variant="h5" gutterBottom>
@@ -120,6 +129,6 @@ export default function FinalEntry() {
           </React.Fragment>
         </Paper>
       </main>
-    </React.Fragment>
+    </React.Component>
   );
 }
