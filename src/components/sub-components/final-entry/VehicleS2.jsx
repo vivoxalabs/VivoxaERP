@@ -86,43 +86,42 @@ export default function VehicleS2(props) {
   const handleTypeChange = (event) => {
     setTypeValue(event.target.value);
   };
-  const {handleVehicleForm, activeStep, handleNext, handleBack } = props;
+  const { handleVehicleForm, activeStep, handleNext, handleBack } = props;
 
   const steps = 3;
-//Tab consts=>
+  //Tab consts=>
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-//
+  //
 
-//All vehicle Form data =>
+  //All vehicle Form data =>
   const [formData, setFormData] = React.useState([]);
 
   var handleFormData = (data, obj) => {
     switch (obj) {
       case "bike":
-        setFormData(formData=>[...formData,{ bike: data }]);
+        setFormData((formData) => [...formData, { bike: data }]);
         break;
       case "car":
-        setFormData(formData=>[...formData,{ lightVehicle: data }]);
+        setFormData((formData) => [...formData, { lightVehicle: data }]);
         break;
       case "ThreeW":
-        setFormData(formData=>[...formData,{ bus: data }]);
+        setFormData((formData) => [...formData, { threeW: data }]);
         break;
       case "bus":
-        setFormData(formData=>[...formData,{ bus: data }]);
+        setFormData((formData) => [...formData, { bus: data }]);
         break;
       default:
         throw new console.error("vehical data switch error");
     }
-    
   };
 
   React.useEffect(() => {
     //console.log(formData);
-  handleVehicleForm(formData);
+    handleVehicleForm(formData);
   });
 
   return (
@@ -457,13 +456,15 @@ function GetThreewheelTab(handleFormData) {
 
   const [isInclude, setIsInclude] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
+
+  //Three Wheel data
   const [threeWheelForm, setThreeWheelForm] = React.useState({
-    licenseType: "",
+    trainType: "",
   });
 
-  const handleDataSave = (data) =>{
-    handleFormData({...threeWheelForm,...data});
-  }
+  const handleDataSave = (data) => {
+    handleFormData({ ...threeWheelForm, ...data }, "ThreeW");
+  };
   const handleTrainTypeChange = (event) => {
     setTrainType(event.target.value);
   };
@@ -523,7 +524,9 @@ function GetThreewheelTab(handleFormData) {
               color="primary"
               className={classes.btnSave}
               onClick={() => {
-                console.log("btnClicked");
+                handleDataSave({
+                  trainType: trainType,
+                });
               }}
             >
               Save
@@ -535,7 +538,7 @@ function GetThreewheelTab(handleFormData) {
   );
 }
 
-function GetBusTab() {
+function GetBusTab(handleFormData) {
   const classes = useStyles();
 
   const [isInclude, setIsInclude] = React.useState(false);
@@ -546,7 +549,15 @@ function GetBusTab() {
   };
   const handleIsInclude = (event) => {
     setIsInclude(event.target.checked);
-    console.log(isInclude);
+    //console.log(isInclude);
+  };
+
+  const [busForm, setBusForm] = React.useState({
+    trainType: "",
+  });
+
+  const handleDataSave = (data) => {
+    handleFormData({ ...busForm, ...data }, "bus");
   };
   return (
     <React.Fragment>
@@ -600,7 +611,9 @@ function GetBusTab() {
               color="primary"
               className={classes.btnSave}
               onClick={() => {
-                console.log("btnClicked");
+                handleDataSave({
+                  trainType: trainType,
+                });
               }}
             >
               Save
