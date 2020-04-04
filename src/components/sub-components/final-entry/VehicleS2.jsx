@@ -16,7 +16,7 @@ import {
   AppBar,
   Tabs,
   Checkbox,
-  Button
+  Button,
 } from "@material-ui/core";
 import MotorcycleIcon from "@material-ui/icons/Motorcycle";
 import DriveEtaIcon from "@material-ui/icons/DriveEta";
@@ -26,20 +26,27 @@ import DirectionsBusIcon from "@material-ui/icons/DirectionsBus";
 // import ThreewheelTab from "./ThreewheelTab";
 // import BusTab from "./BusTab";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   formControl: {
-    margin: theme.spacing(3)
-  }
+    margin: theme.spacing(3),
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  button: {
+    margin: 5,
+  },
 }));
 
 function TabPanel(props) {
@@ -62,29 +69,61 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-force-tab-${index}`,
-    "aria-controls": `scrollable-force-tabpanel-${index}`
+    "aria-controls": `scrollable-force-tabpanel-${index}`,
   };
 }
 
-export default function VehicleS2() {
+export default function VehicleS2(props) {
   const classes = useStyles();
   const [typeValue, setTypeValue] = React.useState("new");
 
-  const handleTypeChange = event => {
+  const handleTypeChange = (event) => {
     setTypeValue(event.target.value);
   };
+  const {handleVehicleForm, activeStep, handleNext, handleBack } = props;
 
+  const steps = 3;
+//Tab consts=>
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+//
+
+//All vehicle Form data =>
+  const [formData, setFormData] = React.useState([]);
+
+  var handleFormData = (data, obj) => {
+    switch (obj) {
+      case "bike":
+        setFormData(formData=>[...formData,{ bike: data }]);
+        break;
+      case "car":
+        setFormData(formData=>[...formData,{ lightVehicle: data }]);
+        break;
+      case "ThreeW":
+        setFormData(formData=>[...formData,{ bus: data }]);
+        break;
+      case "bus":
+        setFormData(formData=>[...formData,{ bus: data }]);
+        break;
+      default:
+        throw new console.error("vehical data switch error");
+    }
+    
+  };
+
+  React.useEffect(() => {
+    //console.log(formData);
+  handleVehicleForm(formData);
+  });
 
   return (
     <React.Fragment>
@@ -144,40 +183,78 @@ export default function VehicleS2() {
           <TabPanel value={value} index={0}>
             {/* <BikeTab var={isBike}/> */}
             {/* //Bike Tab Fragment */}
-            {GetBikeTab()}
+            {GetBikeTab(handleFormData)}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {GetCarTab()}
+            {GetCarTab(handleFormData)}
           </TabPanel>
           <TabPanel value={value} index={2}>
-            {GetThreewheelTab()}
+            {GetThreewheelTab(handleFormData)}
           </TabPanel>
           <TabPanel value={value} index={3}>
-            {GetBusTab()}
+            {GetBusTab(handleFormData)}
           </TabPanel>
+        </div>
+        <div className={classes.buttons}>
+          {activeStep !== 0 && (
+            <Button
+              className={classes.button}
+              variant="outlined"
+              color="primary"
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+          )}
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+          >
+            {activeStep === steps.length - 1 ? "Save" : "Next"}
+          </Button>
         </div>
       </main>
     </React.Fragment>
   );
 }
 
-function GetBikeTab() {
+function GetBikeTab(handleFormData) {
   // MotorBike
   const classes = useStyles();
   const [isInclude, setIsInclude] = React.useState(false);
   const [A1Only, setA1Only] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
 
-  const handleTrainTypeChange = event => {
+  const handleTrainTypeChange = (event) => {
     setTrainType(event.target.value);
   };
-  const handleIsInclude = event => {
+  const handleIsInclude = (event) => {
     setIsInclude(event.target.checked);
   };
 
-  const handleA1Only = event => {
+  const handleA1Only = (event) => {
     setA1Only(event.target.checked);
   };
+
+  const [formBike, setFormBike] = React.useState({
+    A1: "",
+    trainType: "",
+  });
+
+  React.useEffect(() => {
+    //console.log(formBike);
+    //handleFormData(formBike);
+  });
+
+  const handleData = (data) => {
+    //setFormBike({ ...formBike, A1: A1Only });
+    //setFormBike({ trainType:{...formBike,trainType:trainType}});
+    handleFormData({ ...formBike, ...data }, "bike");
+    //handleFormData(formBike);
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -242,7 +319,10 @@ function GetBikeTab() {
               color="primary"
               className={classes.btnSave}
               onClick={() => {
-                console.log("btnClicked");
+                handleData({
+                  A1: A1Only,
+                  trainType: trainType,
+                });
               }}
             >
               Save
@@ -254,22 +334,30 @@ function GetBikeTab() {
   );
 }
 
-function GetCarTab() {
+function GetCarTab(handleFormData) {
   const classes = useStyles();
 
   const [isInclude, setIsInclude] = React.useState(false);
   const [licenseType, setLicenseType] = React.useState("Manual");
   const [trainType, setTrainType] = React.useState("with");
 
-  const handleTrainTypeChange = event => {
+  const handleTrainTypeChange = (event) => {
     setTrainType(event.target.value);
   };
-  const handleIsInclude = event => {
+  const handleIsInclude = (event) => {
     setIsInclude(event.target.checked);
   };
-
-  const handleLicenseTypeChange = event => {
+  const handleLicenseTypeChange = (event) => {
     setLicenseType(event.target.value);
+  };
+
+  const [carForm, setCarForm] = React.useState({
+    vLicenseType: "",
+    trainType: "",
+  });
+
+  const handleDataSave = (data) => {
+    handleFormData({ ...carForm, ...data }, "car");
   };
 
   return (
@@ -349,7 +437,10 @@ function GetCarTab() {
               color="primary"
               className={classes.btnSave}
               onClick={() => {
-                console.log("btnClicked");
+                handleDataSave({
+                  vLicenseType: licenseType,
+                  trainType: trainType,
+                });
               }}
             >
               Save
@@ -361,18 +452,25 @@ function GetCarTab() {
   );
 }
 
-function GetThreewheelTab() {
+function GetThreewheelTab(handleFormData) {
   const classes = useStyles();
 
   const [isInclude, setIsInclude] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
+  const [threeWheelForm, setThreeWheelForm] = React.useState({
+    licenseType: "",
+  });
 
-  const handleTrainTypeChange = event => {
+  const handleDataSave = (data) =>{
+    handleFormData({...threeWheelForm,...data});
+  }
+  const handleTrainTypeChange = (event) => {
     setTrainType(event.target.value);
   };
-  const handleIsInclude = event => {
+  const handleIsInclude = (event) => {
     setIsInclude(event.target.checked);
   };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -443,10 +541,10 @@ function GetBusTab() {
   const [isInclude, setIsInclude] = React.useState(false);
   const [trainType, setTrainType] = React.useState("with");
 
-  const handleTrainTypeChange = event => {
+  const handleTrainTypeChange = (event) => {
     setTrainType(event.target.value);
   };
-  const handleIsInclude = event => {
+  const handleIsInclude = (event) => {
     setIsInclude(event.target.checked);
     console.log(isInclude);
   };

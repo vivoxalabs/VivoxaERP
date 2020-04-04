@@ -11,7 +11,8 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  makeStyles
+  makeStyles,
+  Button
 } from "@material-ui/core";
 
 import {
@@ -32,6 +33,13 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(3)
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    margin: 5
   }
 }));
 
@@ -40,15 +48,23 @@ export default function PersonDetailsS1(props) {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [genderValue, setGenderValue] = React.useState("null");
 
+  const {activeStep, handleNext, handleBack } = props;
+
+  // useEffect(() => {
+  //   console.log("value =  " + values);
+  // });
+
+  const steps = 3;
+
   const handleGenderChange = event => {
     setGenderValue(event.target.value);
   };
+
   const handleDateChange = date => {
     setSelectedDate(date);
   };
-  const handleName = () =>{
-    
-  }
+
+  const handleName = () => {};
 
   return (
     <React.Fragment>
@@ -85,9 +101,9 @@ export default function PersonDetailsS1(props) {
         <Grid item xs={12} md={8} lg={8}>
           <TextField
             required
-            id="midname"
-            name="midName"
-            label="Middle Name"
+            id="initialName"
+            name="initialName"
+            label="Name with Initials"
             fullWidth
           />
         </Grid>
@@ -178,18 +194,32 @@ export default function PersonDetailsS1(props) {
             id="contact1"
             name="contact1"
             label="Contact Number 1"
-            
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <TextField
-            id="contact2"
-            name="contact2"
-            label="Contact Number 2"
-            
-          />
+          <TextField id="contact2" name="contact2" label="Contact Number 2" />
         </Grid>
       </Grid>
+      <div className={classes.buttons}>
+        {activeStep !== 0 && (
+          <Button
+            className={classes.button}
+            variant="outlined"
+            color="primary"
+            onClick={handleBack}
+          >
+            Back
+          </Button>
+        )}
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+        >
+          {activeStep === steps.length - 1 ? "Save" : "Next"}
+        </Button>
+      </div>
     </React.Fragment>
   );
 }

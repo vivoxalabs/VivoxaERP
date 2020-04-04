@@ -42,6 +42,7 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import PreEntry from "./PreEntry";
 import FinalEntry from "./FinalEntry";
+import EntryTest from "./EntryTest";
 
 const drawerWidth = 240;
 
@@ -405,7 +406,7 @@ function NavBar() {
           <DashboardContent/>
         )}/>
         <Route path="/final-entry" render={()=>(
-          <FinalEntry/>
+          <EntryTest/>
         )}/>
       </main>
       </Router>
